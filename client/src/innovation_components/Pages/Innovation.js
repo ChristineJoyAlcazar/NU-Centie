@@ -28,6 +28,7 @@ const useStyles = makeStyles({
   },
 });
 
+
 export default function Create() {
 
   const [innovationList, setInnovationList] = useState([]);
@@ -45,6 +46,7 @@ export default function Create() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
 
   return (
     <>
@@ -78,7 +80,7 @@ export default function Create() {
                 <Grid container spacing={5}>
                   {innovationList.sort((a,b) => a.innovation_id  < b.innovation_id  ? 1 : -1).map((val) => (
                     <Grid item key={val.innovation_id} xs={12} sm={6} lg={4}>
-                      <InnovationCard innovation={val} />
+                      <InnovationCard innovation={val}/>
 
                     </Grid>
                   ))}

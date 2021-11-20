@@ -50,6 +50,7 @@ export default function InnovationSecondPage(){
 
   const location = useLocation()
   const innovation = location.state.innovation
+  const innovator = location.state.innovator
   const classes = useStyles();
 
   const [value, setValue] = React.useState("1");
@@ -88,7 +89,7 @@ export default function InnovationSecondPage(){
             <Typography variant="h3" display="block">
               {innovation.innovation_title}
             </Typography>
-            <Typography variant="h5">Innovator/s: #{innovation.innovator_id}</Typography>
+            <Typography variant="h5">Innovator/s: {innovator.innovator_fname} {innovator.innovator_lname}</Typography>
             <Typography variant="subtitle">
               <strong>Status:</strong> {innovation.innovation_status}
             </Typography>
@@ -125,7 +126,9 @@ export default function InnovationSecondPage(){
               <Link
               to={{
                 pathname: "/innovationInvest",
-                state: {innovation : innovation}
+                state: {innovation : innovation,
+                        innovator : innovator
+                }
                 }}>
               <Button variant="contained" color="primary" size="large">
                 Invest

@@ -56,14 +56,15 @@ function App() {
   return (
     <Router>
       <Suspense fallback={<div />}>
-        <div>{<NavBar />}</div>
+        <div>
+          <NavBar />
+        </div>
 
         <Switch>
-          {/* <Route path="/" component={Login} /> */}
+          {/* <Route path="/" component={MainAdmin} /> */}
           <Route path="/" exact>
             <Redirect to="/products/innovations" />
           </Route>
-          <Route path="/register" component={Register} />
           <Route path="/login" component={Login} />
           <Route path="/products/:category" component={Products} />
           <Route path="/product/:id" component={ProductView} />
@@ -100,7 +101,7 @@ function App() {
             exact
           />
         </Switch>
-        {/* <Footer /> */}
+        <Footer />
       </Suspense>
     </Router>
   );

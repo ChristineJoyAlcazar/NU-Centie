@@ -5,6 +5,7 @@ import * as Yup from "yup";
 import './Multistep.css'
 import Gcash from '../../../assets/gcash.png'
 import Paypal from '../../../assets/paypal.png'
+import Profile from '../../../assets/profile.png'
 import Swal from 'sweetalert2'
 import { Redirect, useLocation } from "react-router"
 import Axios from 'axios';
@@ -31,9 +32,6 @@ export default function Multistepform() {
     const [currentStep, setCurrentStep] = useState(0);
 
     const makeRequest = (formData) => {
-        console.log("Form Submitted", formData);
-        console.log('Remarks: ', formData.remarks);
-        console.log('img: ', formData.uploadProof);
 
         const investment = {
             invest_amount    : formData.amount,
@@ -83,7 +81,6 @@ export default function Multistepform() {
         return ["Personal Information", "Payment Method", "Upload Proof of Payment", "Confirmation"];
     }
     const inStep = getSteps();
-    //console.log("data", data);
 
     return <div className="App">
         <Stepper alternativeLabel activeStep={currentStep}>
@@ -109,7 +106,6 @@ const stepOneValidationSchema = Yup.object({
 const StepOne = (props) => {
     const classes = useStyles();
     const handleSubmit = (values) => {
-        //console.log(values);
         props.next(values);
     };
 
@@ -160,7 +156,6 @@ const stepTwoValidationSchema = Yup.object({
 const StepTwo = (props) => {
     const classes = useStyles();
     const handleSubmit = (values) => {
-        //console.log(values);
         props.next(values);
     };
 
@@ -280,9 +275,6 @@ const StepThree = (props) => {
                                     const fileReader = new FileReader();
                                     fileReader.onloadend  = () => {
                                       if (fileReader.readyState === 2) {
-                                          console.log(fileReader.result);
-                                          console.log(fileReader);
-                                          console.log(e.target.files[0]);
                                           setFieldValue('proofPayment', fileReader.result);
                                         //   setFieldValue('uploadProof', fileReader);
                                       }
@@ -342,6 +334,11 @@ var cardStyle = {
     color: "black"
 }
 const StepFour = (props) => {
+
+    const location = useLocation()
+    const innovation = location.state.innovation
+    const innovator = location.state.innovator
+
     const classes = useStyles();
     let history = useHistory();
     const handleSubmit = (values) => {
@@ -373,20 +370,23 @@ const StepFour = (props) => {
 
                             <Grid item>
                                 <ButtonBase sx={{ width: 128, height: 128 }}>
-                                    <img alt="complex" src="primevandal.jpg" width="80" height="80" />
+                                    <img src={`data:image/jpeg;base64,${Buffer.from(innovation.innovation_pictures?.data).toString(
+            `base64`
+          )}`} width="80" height="80"
+                        />
                                 </ButtonBase>
                             </Grid>
                             <Grid item xs={12} sm container>
                                 <Grid item xs container direction="column" spacing={2}>
                                     <Grid item xs>
                                         <Typography gutterBottom variant="subtitle1" component="div" className={classes.typography}>
-                                            Innovation Title
+                                                {innovation.innovation_title}
                                         </Typography>
                                         <Typography variant="body2" gutterBottom className={classes.typography}>
-                                            Innovator/s:
+                                            Innovator/s: {innovator.innovator_fname} {innovator.innovator_lname}
                                         </Typography>
                                         <Typography variant="body2" color="text.secondary" className={classes.typography}>
-                                            Status:
+                                            Status:  {innovation.innovation_status}
                                         </Typography>
                                     </Grid>
 
@@ -396,10 +396,9 @@ const StepFour = (props) => {
                         </Grid>
 
                         <Grid container spacing={2} className={classes.color}>
-
                             <Grid item>
                                 <ButtonBase sx={{ width: 128, height: 128 }}>
-                                    <img alt="complex" src="nuLogo.png" width="80" height="80" />
+                                    <img alt="complex" src={Profile} width="80" height="80" />
                                 </ButtonBase>
                             </Grid>
                             <Grid item xs={12} sm container>

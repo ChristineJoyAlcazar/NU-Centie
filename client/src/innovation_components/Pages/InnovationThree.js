@@ -52,6 +52,7 @@ export default function InnovationThree() {
 
   const location = useLocation()
   const innovation = location.state.innovation
+  const innovator = location.state.innovator
 
 
     const classes = useStyles();
@@ -66,7 +67,7 @@ export default function InnovationThree() {
           )}`}
                         />
                         <h3>{innovation.innovation_title}</h3>
-                        <p>Innovator/s: #{innovation.innovator_id}</p>
+                        <p>Innovator/s: {innovator.innovator_fname} {innovator.innovator_lname}</p>
                         <p>{innovation.innovation_description}</p>
                         <span>Status: {innovation.innovation_status}</span>
                     </div>
