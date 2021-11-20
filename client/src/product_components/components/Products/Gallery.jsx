@@ -48,8 +48,8 @@ function Gallery(props) {
             .then((responseProduct) => {
               var unit = responseProduct.data[0].product_price;
               prod.push({
-                id: item.product_id,
-                image: null,
+                id: item.innovator_id,
+                image: item.innovation_pictures,
                 name: item.innovation_title,
                 person: item.innovator_id,
                 definition: item.innovation_description,

@@ -127,7 +127,7 @@ function Checkout() {
     var newItem = {
       order_date: dateSumitted,
       order_total: getTotal(),
-      user_id: "1",
+      user_id: localStorage.getItem("userID"),
     };
     axios
       .post("http://localhost:3003/insertOrder", newItem)

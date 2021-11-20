@@ -17,72 +17,82 @@ function Details(props) {
   }, []);
 
   const getItems = async () => {
+    console.log(props.props);
     axios.get("http://localhost:3003/retreiveBook").then((response) => {
-      response.data.map((item, index) => {
-        if (item.product_id == props.props) {
-          axios
-            .get("http://localhost:3003/retrieveProductById", {
-              params: {
-                id: item.product_id,
-              },
-            })
-            .then((response) => {
-              console.log(response.data);
-              setItem({
-                id: item.product_id,
-                image: item.book_thumbnail,
-                definition: item.book_description,
-                name: item.book_name,
-                person: item.book_author,
-                unit: response.data[0].product_price,
+      if (response.data.length != 0) {
+        response.data.map((item, index) => {
+          if (item.product_id == props.props) {
+            axios
+              .get("http://localhost:3003/retrieveProductById", {
+                params: {
+                  id: item.product_id,
+                },
+              })
+              .then((response) => {
+                setItem({
+                  id: item.product_id,
+                  image: item.book_thumbnail,
+                  definition: item.book_description,
+                  name: item.book_name,
+                  person: item.book_author,
+                  unit: response.data[0].product_price,
+                });
               });
-            });
-        }
-      });
+          }
+        });
+      }
     });
     axios.get("http://localhost:3003/retreiveInnovation").then((response) => {
-      response.data.map((item, index) => {
-        if (item.product_id == props.props) {
-          setItem({
-            id: item.product_id,
-            definition: item.innovation_description,
-            story: item.innovation_story,
-            name: item.innovation_title,
-            status: item.innovation_status,
-            image: item.book_thumbnail,
+      if (response.data.length != 0) {
+        response.data.map((item, index) => {
+          if (item.product_id == props.props) {
+            console.log(item.innovation_pictures);
 
-            innovator_id: item.innovator_id,
-          });
-        }
-      });
+            setItem({
+              id: item.product_id,
+              definition: item.innovation_description,
+              story: item.innovation_story,
+              name: item.innovation_title,
+              status: item.innovation_status,
+              image: item.innovation_pictures,
+
+              innovator_id: item.innovator_id,
+            });
+          }
+        });
+      }
     });
     axios.get("http://localhost:3003/retreiveSouvenir").then((response) => {
-      response.data.map((item, index) => {
-        if (item.product_id == props.props) {
-          setItem({
-            id: item.product_id,
-            name: item.souvenir_name,
-            definition: item.souvenir_description,
-            userid: item.user_id,
-            prod_id: item.product_id,
-            // image: item.book_thumbnail,
+      if (response.data.length != 0) {
+        response.data.map((item, index) => {
+          if (item.product_id == props.props) {
+            setItem({
+              id: item.product_id,
+              name: item.souvenir_name,
+              definition: item.souvenir_description,
+              // userid: item.user_id,
+              prod_id: item.product_id,
+              image: item.book_thumbnail,
 
-            // person: item.book_author,
-          });
-        }
-      });
+              person: item.book_author,
+            });
+          }
+        });
+      }
     });
   };
   const AddCart = async () => {
     var newItem = {
-      product_id: item.id,
+      product_id: props.props,
       quantity: quantity,
-      user_id: 1,
+      user_id: localStorage.getItem("userID"),
     };
     axios.post("http://localhost:3003/insertCart", newItem).then((response) => {
       modalRef.current.displayModal();
     });
   };
+  console.log(item);
+
   return (
     <div className={style.details}>
       <Breadcrumbs />
@@ -120,7 +130,6 @@ function Details(props) {
 
       <div className={style.details__buttons}>
         <Link to="/cart">
-          *{" "}
           <button
             onClick={() => {
               setCateg("Cart");
@@ -132,7 +141,6 @@ function Details(props) {
           </button>
         </Link>
         <Link to="/checkout">
-          *{" "}
           <button
             onClick={() => {
               setCateg("Check Out");

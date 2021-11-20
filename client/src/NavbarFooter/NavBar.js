@@ -31,7 +31,7 @@ function NavBar() {
                 {/* innovator href landing page */}
               </li>
               <li>
-                <a href="#!">exhibits</a>
+                <a href="/exhibit">exhibits</a>
                 {/* exhibits href landing page */}
               </li>
               <li>
@@ -57,11 +57,16 @@ function NavBar() {
               <li>
                 <a href="/FAQs">FAQs</a>
                 {/* Privacy Policy href landing page */}
+              </li>{" "}
+              <a href="/cart">
+                <img src={cart} alt="" className={style.cart}></img>
+              </a>{" "}
+              <li>
+                <a href="/login" className={style.logout}>
+                  Logout
+                </a>{" "}
               </li>
             </ul>
-            <a href="/cart">
-              <img src={cart} alt="" className={style.cart}></img>
-            </a>
           </nav>
         </div>
       </div>

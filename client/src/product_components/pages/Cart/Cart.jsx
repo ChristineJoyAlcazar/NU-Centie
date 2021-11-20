@@ -16,90 +16,101 @@ function Cart() {
     console.log(items);
   }, []);
   const getItems = async () => {
-    axios.get("http://localhost:3003/retrieveCart").then((response) => {
-      response.data.map((itemCart, index) => {
-        axios
-          .get("http://localhost:3003/retreiveProduct", {
-            params: {
-              id: itemCart.product_id,
-            },
-          })
-          .then((responseProduct) => {
-            responseProduct.data.map((itemProduct, index) => {
-              if (itemProduct.product_category == "Book") {
-                axios
-                  .get("http://localhost:3003/retrieveBookById", {
-                    params: {
-                      id: itemCart.product_id,
-                    },
-                  })
-                  .then((responseBook) => {
-                    responseBook.data.map((itemBook, index) => {
-                      setItem((data) => [
-                        ...data,
-                        {
-                          id: itemCart.cart_id,
-                          image: itemBook.book_thumbnail,
-                          definition: itemBook.book_description,
-                          name: itemBook.book_name,
-                          person: itemBook.book_author,
-                          quantity: itemCart.quantity,
-                          unit: itemProduct.product_price,
-                        },
-                      ]);
+    axios
+      .get("http://localhost:3003/retrieveCart", {
+        params: {
+          id: localStorage.getItem("userID"),
+        },
+      })
+      .then((response) => {
+        response.data.map((itemCart, index) => {
+          console.log(
+            itemCart,
+            +" " + localStorage.getItem("userID") + " userid"
+          );
+
+          axios
+            .get("http://localhost:3003/retreiveProduct", {
+              params: {
+                id: itemCart.product_id,
+              },
+            })
+            .then((responseProduct) => {
+              responseProduct.data.map((itemProduct, index) => {
+                if (itemProduct.product_category == "Book") {
+                  axios
+                    .get("http://localhost:3003/retrieveBookById", {
+                      params: {
+                        id: itemCart.product_id,
+                      },
+                    })
+                    .then((responseBook) => {
+                      responseBook.data.map((itemBook, index) => {
+                        setItem((data) => [
+                          ...data,
+                          {
+                            id: itemCart.cart_id,
+                            image: itemBook.book_thumbnail,
+                            definition: itemBook.book_description,
+                            name: itemBook.book_name,
+                            person: itemBook.book_author,
+                            quantity: itemCart.quantity,
+                            unit: itemProduct.product_price,
+                          },
+                        ]);
+                      });
                     });
-                  });
-              } else if (itemProduct.product_category == "Innovation") {
-                axios
-                  .get("http://localhost:3003/retrieveInnovationById", {
-                    params: {
-                      id: itemCart.product_id,
-                    },
-                  })
-                  .then((responseBook) => {
-                    responseBook.data.map((itemBook, index) => {
-                      setItem((data) => [
-                        ...data,
-                        {
-                          id: itemCart.cart_id,
-                          image: "",
-                          definition: itemBook.innovation_description,
-                          name: itemBook.innovation_title,
-                          person: itemBook.innovator_id,
-                          quantity: itemCart.quantity,
-                          unit: itemProduct.product_price,
-                        },
-                      ]);
+                } else if (itemProduct.product_category == "Innovation") {
+                  axios
+                    .get("http://localhost:3003/retrieveInnovationById", {
+                      params: {
+                        id: itemCart.product_id,
+                      },
+                    })
+                    .then((responseBook) => {
+                      responseBook.data.map((itemBook, index) => {
+                        setItem((data) => [
+                          ...data,
+                          {
+                            id: itemCart.cart_id,
+                            image: "",
+                            definition: itemBook.innovation_description,
+                            name: itemBook.innovation_title,
+                            person: itemBook.innovator_id,
+                            quantity: itemCart.quantity,
+                            unit: itemProduct.product_price,
+                          },
+                        ]);
+                      });
                     });
-                  });
-              } else if (itemProduct.product_category == "Souvenir") {
-                axios
-                  .get("http://localhost:3003/retrieveSouvenirById", {
-                    params: {
-                      id: itemCart.product_id,
-                    },
-                  })
-                  .then((responseBook) => {
-                    responseBook.data.map((itemBook, index) => {
-                      setItem((data) => [
-                        ...data,
-                        {
-                          id: itemCart.cart_id,
-                          image: itemBook.book_thumbnail,
-                          definition: itemBook.souvenir_description,
-                          name: itemBook.souvenir_name,
-                          person: "National University",
-                          quantity: itemCart.quantity,
-                          unit: itemProduct.product_price,
-                        },
-                      ]);
+                } else if (itemProduct.product_category == "Souvenir") {
+                  axios
+                    .get("http://localhost:3003/retrieveSouvenirById", {
+                      params: {
+                        id: itemCart.product_id,
+                      },
+                    })
+                    .then((responseBook) => {
+                      responseBook.data.map((itemBook, index) => {
+                        setItem((data) => [
+                          ...data,
+                          {
+                            id: itemCart.cart_id,
+                            image: itemBook.book_thumbnail,
+                            definition: itemBook.souvenir_description,
+                            name: itemBook.souvenir_name,
+                            person: "National University",
+                            quantity: itemCart.quantity,
+                            unit: itemProduct.product_price,
+                          },
+                        ]);
+                      });
                     });
-                  });
-              }
+                }
+              });
             });
-          });
+        });
       });
-    });
   };
 
   const getTotal = () => {

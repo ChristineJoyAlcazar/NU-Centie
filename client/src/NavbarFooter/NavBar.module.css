@@ -52,7 +52,10 @@
   text-transform: uppercase;
   cursor: pointer;
 }
-
+.logout {
+  text-decoration: none;
+  color: #fff;
+}
 .nav_mobile {
   display: none;
 }

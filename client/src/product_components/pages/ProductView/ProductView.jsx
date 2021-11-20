@@ -10,10 +10,10 @@ import Footer from "../../../NavbarFooter/Footer";
 
 function ProductView() {
   let { id } = useParams();
-
+  console.log(id);
   return (
     <>
-      <NavBar />
+      {/* <NavBar /> */}
       {/* <img src={Navbar} alt="" style={{ width: "100%" }} /> */}
       <div className="container">
         <main className={style.product}>

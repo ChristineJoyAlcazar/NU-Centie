@@ -1,11 +1,10 @@
-const pool = require('../config/database.js');
+const pool = require("../config/database.js");
 const router = require("express").Router();
-
 
 require("dotenv").config();
 
 router.get("/retreiveBook", (req, res) => {
-    pool.query("SELECT * FROM book", (err, result) => {
+  pool.query("SELECT * FROM book", (err, result) => {
     console.log(result);
     if (err) {
       console.log(err);
@@ -16,7 +15,7 @@ router.get("/retreiveBook", (req, res) => {
 });
 
 router.get("/retreiveInnovation", (req, res) => {
-    pool.query("SELECT * FROM innovation", (err, result) => {
+  pool.query("SELECT * FROM innovation", (err, result) => {
     if (err) {
       console.log(err);
     } else {
@@ -26,7 +25,7 @@ router.get("/retreiveInnovation", (req, res) => {
 });
 
 router.get("/retreiveSouvenir", (req, res) => {
-    pool.query("SELECT * FROM souvenir", (err, result) => {
+  pool.query("SELECT * FROM souvenir", (err, result) => {
     if (err) {
       console.log(err);
     } else {
@@ -36,7 +35,7 @@ router.get("/retreiveSouvenir", (req, res) => {
 });
 
 router.get("/retreiveProduct", (req, res) => {
-    pool.query(
+  pool.query(
     `SELECT * FROM products WHERE product_id=?`,
     [req.query.id],
     (err, result) => {
@@ -50,7 +49,7 @@ router.get("/retreiveProduct", (req, res) => {
 });
 
 router.get("/retrieveBookById", (req, res) => {
-    pool.query(
+  pool.query(
     `SELECT * FROM book WHERE product_id=?`,
     [req.query.id],
     (err, result) => {
@@ -63,7 +62,7 @@ router.get("/retrieveBookById", (req, res) => {
   );
 });
 router.get("/retrieveInnovationById", (req, res) => {
-    pool.query(
+  pool.query(
     `SELECT * FROM innovation WHERE product_id=?`,
     [req.query.id],
     (err, result) => {
@@ -76,7 +75,7 @@ router.get("/retrieveInnovationById", (req, res) => {
   );
 });
 router.get("/retrieveSouvenirById", (req, res) => {
-    pool.query(
+  pool.query(
     `SELECT * FROM souvenir WHERE product_id=?`,
     [req.query.id],
     (err, result) => {
@@ -199,13 +198,18 @@ router.post("/insertCart", (req, res) => {
 });
 
 router.get("/retrieveCart", (req, res) => {
-  pool.query("SELECT * FROM Cart", (err, result) => {
-    if (err) {
-      console.log(err);
-    } else {
-      res.send(result);
+  console.log(req);
+  pool.query(
+    `SELECT * FROM Cart WHERE user_id=?`,
+    [req.query.id],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
     }
-  });
+  );
 });
 router.put("/updateCartQuantity", (req, res) => {
   pool.query(
@@ -251,6 +255,5 @@ router.get("/retrieveProductById", (req, res) => {
     }
   );
 });
-
 
 module.exports = router;

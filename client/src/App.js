@@ -8,7 +8,6 @@ import {
 import NavBar from "./NavbarFooter/NavBar";
 import Footer from "./NavbarFooter/Footer";
 
-
 import { lazy, Suspense } from "react";
 import ViewStory from "./innovator_components/SeeMore/ViewStory";
 const Payment = lazy(() =>
@@ -23,7 +22,7 @@ const Cart = lazy(() => import("./product_components/pages/Cart/Cart"));
 const Checkout = lazy(() =>
   import("./product_components/pages/Checkout/Checkout")
 );
-
+const Register = lazy(() => import("./Login/Register"));
 const Home = lazy(() => import("./innovator_components/Home"));
 const Main = lazy(() => import("./innovator_components/main"));
 const ViewMore = lazy(() => import("./innovator_components/SeeMore/ViewStory"));
@@ -44,23 +43,28 @@ const PrivacyPolicy = lazy(() => import("./PrivacyPolicy/PrivacyPolicy"));
 const Login = lazy(() => import("./Login/Login"));
 
 const MainAdmin = lazy(() => import("./admin/components/Main"));
-const MainExhibitPage = lazy(() => import("./Exhibit/pages/Main-Exhibit-Page/main-exhibit-page"));
-const ProductDetail = lazy(() => import("./Exhibit/pages/Product-Details-Exhibit-Page/product-details-exhibit-page"));
+const MainExhibitPage = lazy(() =>
+  import("./Exhibit/pages/Main-Exhibit-Page/main-exhibit-page")
+);
+const ProductDetail = lazy(() =>
+  import(
+    "./Exhibit/pages/Product-Details-Exhibit-Page/product-details-exhibit-page"
+  )
+);
 
 function App() {
   return (
     <Router>
       <Suspense fallback={<div />}>
-        <div>
-          {/* <NavBar /> */}
-        </div>
+        <div>{<NavBar />}</div>
 
         <Switch>
-        <Route path="/" component={MainAdmin} />
-          {/* <Route path="/" exact>
+          {/* <Route path="/" component={Login} /> */}
+          <Route path="/" exact>
             <Redirect to="/products/innovations" />
-          </Route> */}
-          <Route path="/login" component={Login}/>
+          </Route>
+          <Route path="/register" component={Register} />
+          <Route path="/login" component={Login} />
           <Route path="/products/:category" component={Products} />
           <Route path="/product/:id" component={ProductView} />
           <Route path="/cart" component={Cart} />
@@ -82,14 +86,19 @@ function App() {
             path="/innovationInvest"
             component={InnovationThirdPage}
           />
-
           <Route path="/innovation" component={Create} />
           <Route path="/main" component={Main} />
           <Route path="/ViewStory" component={ViewStory} />
           <Route path="/contactus" component={ContactUs} exact />
           <Route path="/privacy" component={PrivacyPolicy} exact />
-          <Route path="/exhibit" component={MainExhibitPage} exact/>
-          <Route path="/exhibit/productdetail" component={ProductDetail} exact/>
+          <Route path="/exhibit" component={MainExhibitPage} exact />
+          <Route path="/story" component={ViewMore} />
+
+          <Route
+            path="/exhibit/productdetail"
+            component={ProductDetail}
+            exact
+          />
         </Switch>
         {/* <Footer /> */}
       </Suspense>

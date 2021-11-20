@@ -21,7 +21,7 @@ function Carousel_Imgs(props) {
       axios.get("http://localhost:3003/retreiveInnovation").then((response) => {
         response.data.map((item, index) => {
           if (item.product_id == props.props) {
-            setImage({ image: item.book_thumbnail });
+            setImage({ image: item.innovation_pictures });
           }
         });
       });
@@ -35,7 +35,7 @@ function Carousel_Imgs(props) {
     };
     call();
   }, []);
-  console.log(image);
+  console.log(image, " gasdg");
   return (
     <div>
       <div>
