@@ -56,9 +56,9 @@ function App() {
   return (
     <Router>
       <Suspense fallback={<div />}>
-        <div>
+        {/* <div>
           <NavBar />
-        </div>
+        </div> */}
 
         <Switch>
           {/* <Route path="/" component={MainAdmin} /> */}
@@ -101,7 +101,7 @@ function App() {
             exact
           />
         </Switch>
-        <Footer />
+        {/* <Footer /> */}
       </Suspense>
     </Router>
   );
